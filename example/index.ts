@@ -1,5 +1,7 @@
-// Edit this file to trigger the TSServer commands.
+const x = "markers";
 
-const anExampleVariable = "Hello World"
-console.log(anExampleVariable)
-a
+const y = "bads";
+
+const z = "maps";
+
+const a = "foos";
