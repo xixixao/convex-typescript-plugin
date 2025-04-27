@@ -28,7 +28,8 @@ function init(modules: {
     proxy.findReferences = (fileName, position) => {
       const builtin = info.languageService.findReferences(fileName, position);
 
-      info.project.projectService.logger.info(JSON.stringify(builtin, null, 2));
+      //// For debugging:
+      // info.project.projectService.logger.info(JSON.stringify(builtin, null, 2));
 
       // This is not an identifier/field/etc.
       if (!builtin) return;
