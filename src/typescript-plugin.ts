@@ -36,64 +36,76 @@ function init(modules: {
       // This is not an identifier/field/etc.
       if (!builtin) return;
 
-      const definitionAndReferences = builtin[0];
-      const definition = definitionAndReferences.definition;
+      // The code in the try clause is not expected to throw, ever.
+      // But in case we have a bug here, we don't want to affect the UX,
+      // so we catch all errors and return the original result.
+      try {
+        const definitionAndReferences = builtin[0];
+        if (!definitionAndReferences) return;
 
-      const program = info.languageService.getProgram();
-      if (!program) return;
+        const definition = definitionAndReferences.definition;
 
-      const convexMatch = getConvexTableDefinitionForIdentifier(
-        program,
-        definition.fileName,
-        definition.textSpan.start,
-        definition.textSpan.length,
-      );
+        const program = info.languageService.getProgram();
+        if (!program) return;
 
-      if (!convexMatch) return builtin;
-
-      const { tableName, tableDeclaration } = convexMatch;
-
-      const matchingDefinition = builtin.find(
-        ({ definition }) =>
-          definition.fileName === tableDeclaration.getSourceFile().fileName &&
-          definition.textSpan.start === tableDeclaration.getStart(),
-      );
-
-      if (!matchingDefinition) return builtin;
-
-      // Now we need to go through all files in the project,
-      // and find all the string literals that match the table name.
-      // We'll then return the references for those.
-
-      const files = program
-        .getSourceFiles()
-        .filter((file) => !file.isDeclarationFile);
-
-      const additionalReferences: ts.ReferenceEntry[] = [];
-
-      for (const file of files) {
-        const fileReferences = findAllTableReferencesInFile(file, tableName);
-        additionalReferences.push(
-          ...fileReferences.map((node) => ({
-            fileName: file.fileName,
-            textSpan: {
-              start: node.getStart() + 1,
-              length: node.getWidth() - 2,
-            },
-            isWriteAccess: false,
-            isDefinition: false,
-            isInString: true as const,
-          })),
+        const convexMatch = getConvexTableDefinitionForIdentifier(
+          program,
+          definition.fileName,
+          definition.textSpan.start,
+          definition.textSpan.length,
         );
+
+        if (!convexMatch) return builtin;
+
+        const { tableName, tableDeclaration } = convexMatch;
+
+        const matchingDefinition = builtin.find(
+          ({ definition }) =>
+            definition.fileName === tableDeclaration.getSourceFile().fileName &&
+            definition.textSpan.start === tableDeclaration.getStart(),
+        );
+
+        if (!matchingDefinition) return builtin;
+
+        // Now we need to go through all files in the project,
+        // and find all the string literals that match the table name.
+        // We'll then return the references for those.
+
+        const files = program
+          .getSourceFiles()
+          .filter((file) => !file.isDeclarationFile);
+
+        const additionalReferences: ts.ReferenceEntry[] = [];
+
+        for (const file of files) {
+          const fileReferences = findAllTableReferencesInFile(file, tableName);
+          additionalReferences.push(
+            ...fileReferences.map((node) => ({
+              fileName: file.fileName,
+              textSpan: {
+                start: node.getStart() + 1,
+                length: node.getWidth() - 2,
+              },
+              isWriteAccess: false,
+              isDefinition: false,
+              isInString: true as const,
+            })),
+          );
+        }
+        const references = definitionAndReferences.references;
+        return [
+          {
+            definition,
+            references: [...references, ...additionalReferences],
+          },
+          ...builtin.slice(1),
+        ];
+      } catch (e: any) {
+        info.project.projectService.logger.info(
+          "Convex error in findReferences:" + (e?.stack ?? e),
+        );
+        return builtin;
       }
-      const references = definitionAndReferences.references;
-      return [
-        {
-          definition,
-          references: [...references, ...additionalReferences],
-        },
-        ...builtin.slice(1),
-      ];
     };
 
     proxy.getDefinitionAndBoundSpan = (fileName, position) => {
@@ -106,6 +118,10 @@ function init(modules: {
       );
 
       if (builtin) return builtin;
+
+      // The code below is not expected to throw, ever. If it does,
+      // it's a bug, but it won't affect UX, so we can let it throw,
+      // to ease debugging.
 
       const convexMatch = getConvexTableDefinitionForStringLiteral(
         fileName,
@@ -153,6 +169,10 @@ function init(modules: {
       );
 
       if (builtin) return builtin;
+
+      // The code below is not expected to throw, ever. If it does,
+      // it's a bug, but it won't affect UX, so we can let it throw,
+      // to ease debugging.
 
       const convexMatch = getConvexTableDefinitionForStringLiteral(
         fileName,
@@ -338,7 +358,7 @@ function init(modules: {
       lines.findIndex((line) => /[^\s]/.test(line)),
       0,
     );
-    const indent = lines[startLineIndex].match(/^\s+/)?.[0] ?? "";
+    const indent = lines[startLineIndex]!.match(/^\s+/)?.[0] ?? "";
     const resultLines = lines
       .slice(startLineIndex)
       .map((line) =>
@@ -401,5 +421,5 @@ function init(modules: {
   return { create };
 }
 
-// For some reason this syntax must be used!
-export = init;
+// Note that ESM export will not work here!
+module.exports = init;

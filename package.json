@@ -1,12 +1,11 @@
 {
-    "name": "my-plugin",
-    "version": "0.0.1",
-    "license": "MIT",
-    "main": "./out",
-    "dependencies": {
-        "typescript": "^4.9.5"
-    },
-    "devDependencies": {
-        "@types/node": "^22.15.2"
-    }
+  "name": "my-plugin",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.2"
+  }
 }
