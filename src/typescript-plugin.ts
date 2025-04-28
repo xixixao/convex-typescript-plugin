@@ -268,18 +268,20 @@ function init(modules: {
       const schemaDeclaration = findDefaultExport(schemaFile);
       if (!schemaDeclaration) return;
 
+      // The type of `getChildAt` is wrong, it can be `undefined`.
       // `export default foo` => foo is at index 2
       const schema = schemaDeclaration.getChildAt(2);
+      if (!schema) return;
 
       const typeChecker = program.getTypeChecker();
 
       const schemaType = typeChecker.getTypeAtLocation(schema);
 
-      // (ts as any).getObjectFlags(schemaType) & ts.TypeReference
+      // We don't need to check the type of `schemaType`,
+      // `getTypeArguments` returns `[]` if the type isn't a generic.
       const schemaObjectType = typeChecker.getTypeArguments(
         schemaType as ts.TypeReference,
       )[0];
-
       if (!schemaObjectType) return;
 
       const tableSymbol = typeChecker.getPropertyOfType(
@@ -325,12 +327,12 @@ function init(modules: {
         allFiles.find((file) => {
           if (file.fileName !== "schema.ts") return false;
           // read convex.json from parent folder
-          const convexJson = readFileSync(
-            path.join(file.fileName, "..", "convex.json"),
-            "utf-8",
-          );
           let convexJsonObject: unknown;
           try {
+            const convexJson = readFileSync(
+              path.join(file.fileName, "..", "convex.json"),
+              "utf-8",
+            );
             convexJsonObject = JSON.parse(convexJson);
           } catch {
             return false;
