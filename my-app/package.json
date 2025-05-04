@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "tsserver-plugin": "file:..",
-    "convex": "^1.23.0",
+    "convex": "file:../../convex-js/convex-1.23.0.tgz",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tsserver-plugin": "file:.."
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
