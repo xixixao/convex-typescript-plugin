@@ -48,9 +48,9 @@ Add this configuration to your `tsconfig.json`'s `compilerOptions`:
 ```json
 {
   "compilerOptions": {
-    // ...
+    /* ... */
     "plugins": [{ "name": "@xixixao/convex-typescript-plugin" }]
-    //...
+    /* ... */
   }
 }
 ```
