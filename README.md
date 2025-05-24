@@ -1,52 +1,92 @@
-## A Template for a TypeScript Language Service Plugin
+# Convex TypeScript Plugin
 
-<img src="./docs/screenshot.png">
+A [TypeScript](https://www.typescriptlang.org/) plugin for working with
+[Convex](https://docs.convex.dev/), enabling extra features in IDEs like
+[VS Code](https://code.visualstudio.com/) and [Cursor](https://www.cursor.com/).
 
-This repo has two projects:
+## Features
 
-- `/` is a TSServer Plugin 
-- `/example` is a TypeScript project which uses the root TSServer Plugin
+### Go to definition
 
-The source files for your project
-
-#### Get Started
-
-Get the plugin working and your TS to JS converted as you save:
+Click on a table name to jump to its definition in your Convex schema:
 
 ```ts
-git clone https://github.com/orta/TypeScript-TSServer-Plugin-Template
-cd TypeScript-TSServer-Plugin-Template
-
-# Install deps and run TypeScript
-npm i
-npx tsc --watch
+export const listTasks = query({
+  handler: async (ctx) => {
+    const tasks = await ctx.db.query("tasks").collect();
+    // cmd+click or ctrl+click here     ^     to go the schema
+  },
+});
 ```
 
-Next, get the example project up and running, it will load your TSServer Plugin from the emitted JavaScript.
+### Hover
 
+Hover over a table name to see the table's definition.
+
+### Find all references
+
+Click on the table name in your schema definition to see all places it is used
+(its references).
+
+```ts
+export default defineSchema({
+  messages: defineTable({
+    body: v.string(),
+    // ^ here cmd+click or ctrl+click to see all references
+  }),
+});
 ```
-# Set up the host app to work in
-cd example
-npm i
-cd ..
 
-# Open one VS Code window to work on your plugin
-code .
+## Install
 
-# Or to hook up a debugger, use this command
-# to have the TSServer wait till you attach:
-TSS_DEBUG_BRK=9559 code example
-
-# or use this to hook in later:
-TSS_DEBUG=9559 code example
+```sh
+npm install @xixixao/convex-typescript-plugin
 ```
 
-You can then use the launch options in this root project to connect your debugger to the running TSServer in the other window. To see changes, run the command palette "TypeScript: Reload Project" to restart the TSServer for the project.
+Add this configuration to your `tsconfig.json`'s `compilerOptions`:
 
-Make sure that the TypeScript version on that project runs from your `node_modules` and not the version which is embedded in vscode. You can see the logs via the vscode command 'TypeScript: Open TS Server Logs." ( search for 'Loading tsserver-plugin' to see whether it loaded correctly. )
+```json
+{
+  "compilerOptions": {
+    // ...
+    "plugins": [{ "name": "@xixixao/convex-typescript-plugin" }]
+    //...
+  }
+}
+```
 
-### What Now?
+The `tsconfig.json` can be inside the `convex` folder or above it.
 
-This project has a `debugger` statement inside the completions which will trigger on completions, you can get that running and then you have proven the toolset works and get started building your plugin.
+## Limitations
 
-You can read up the docs on [Language Service Plugins in the TypeScript repo wiki](https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin#overview-writing-a-simple-plugin).
+### Table names use-sites
+
+Since table names are just strings, and can be passed around, the plugin is
+optimistic: If you click on a string and it matches the name of one of your
+tables, it will be assumed to be a table name, even if it's just a coincidence.
+
+This is also true for finding the references, so this can show places where
+you're not using the string as a name of a table.
+
+### Ways of defining the schema
+
+All typical ways of defining the schema are supported. As long as TypeScript can
+infer the table names, you're good.
+
+[Ents](https://github.com/get-convex/convex-ents) schemas are also supported.
+
+## Troubleshooting
+
+Remember that all intellisense features work off of unsaved file state, while
+your running Convex backend will use the deployed (previously saved) schema.
+
+## Details
+
+Ideally we wouldn't need this plugin. The functionality could be supported
+directly, and better, by the TypeScript language server itself. But this is
+unlikely to happen any time soon, see:
+https://github.com/microsoft/TypeScript/issues/49033.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md).

@@ -11,7 +11,7 @@
     "jsx": "react-jsx",
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "plugins": [{ "name": "tsserver-plugin/typescript-plugin" }],
+    "plugins": [{ "name": "@xixixao/convex-typescript-plugin" }],
 
     /* These compiler options are required by Convex */
     "target": "ESNext",

@@ -1,11 +1,30 @@
 {
-  "name": "my-plugin",
+  "name": "@xixixao/convex-typescript-plugin",
   "version": "0.0.1",
-  "license": "MIT",
-  "dependencies": {
-    "typescript": "^4.9.5"
+  "description": "A TypeScript plugin for Convex, enabling jump to schema definition, hover, and find all schema references.",
+  "author": "xixixao",
+  "homepage": "https://github.com/xixixao/convex-typescript-plugin",
+  "repository": "github:xixixao/convex-typescript-plugin",
+  "bugs": {
+    "url": "https://github.com/xixixao/convex-typescript-plugin/issues"
   },
+  "keywords": [
+    "convex",
+    "typescript",
+    "plugin",
+    "schema",
+    "table",
+    "jump to definition",
+    "hover",
+    "find all references"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.js.map"
+  ],
   "devDependencies": {
+    "typescript": "^4.9.5",
     "@types/node": "^22.15.2"
   }
 }

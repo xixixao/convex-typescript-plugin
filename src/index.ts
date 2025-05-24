@@ -1,4 +1,3 @@
-import { ScriptElementKind, SymbolDisplayPartKind } from "typescript";
 import { readFileSync } from "fs";
 import path from "path";
 
@@ -145,13 +144,13 @@ function init(modules: {
               length: tableDeclaration.getFullWidth(),
             },
             // No idea what this does
-            containerKind: ScriptElementKind.primitiveType,
+            containerKind: ts.ScriptElementKind.primitiveType,
             // No idea what this does
             containerName: "__object",
             // No idea what this does
             name: tableName,
             // No idea what this does
-            kind: ScriptElementKind.memberVariableElement,
+            kind: ts.ScriptElementKind.memberVariableElement,
             fileName: tableDeclaration.getSourceFile().fileName,
           },
         ],
@@ -183,7 +182,7 @@ function init(modules: {
       const { textSpan, tableDeclaration } = convexMatch;
 
       return {
-        kind: ScriptElementKind.string,
+        kind: ts.ScriptElementKind.string,
         kindModifiers: "",
         textSpan,
         displayParts: [
@@ -198,7 +197,7 @@ function init(modules: {
           //   text: "\n",
           // },
           {
-            kind: SymbolDisplayPartKind.text.toString(),
+            kind: ts.SymbolDisplayPartKind.text.toString(),
             text: trimIndent(tableDeclaration.getFullText() ?? ""),
           },
         ],

@@ -73,5 +73,5 @@ dist
 .yarn/install-state.gz
 out
 
-typescript-plugin.js
-typescript-plugin.js.map
+/*.js
+/*.js.map
