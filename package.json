@@ -4,7 +4,10 @@
   "description": "A TypeScript plugin for Convex, enabling jump to schema definition, hover, and find all schema references.",
   "author": "xixixao",
   "homepage": "https://github.com/xixixao/convex-typescript-plugin",
-  "repository": "github:xixixao/convex-typescript-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xixixao/convex-typescript-plugin.git"
+  },
   "bugs": {
     "url": "https://github.com/xixixao/convex-typescript-plugin/issues"
   },
