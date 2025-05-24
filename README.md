@@ -1,5 +1,7 @@
 # Convex TypeScript Plugin
 
+[![Node version](https://img.shields.io/npm/v/%40xixixao%2Fconvex-typescript-plugin)](https://www.npmjs.com/package/@xixixao/convex-typescript-plugin)
+
 A [TypeScript](https://www.typescriptlang.org/) plugin for working with
 [Convex](https://docs.convex.dev/), enabling extra features in IDEs like
 [VS Code](https://code.visualstudio.com/) and [Cursor](https://www.cursor.com/).
