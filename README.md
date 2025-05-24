@@ -43,19 +43,18 @@ export default defineSchema({
 npm install @xixixao/convex-typescript-plugin
 ```
 
-Add this configuration to your `tsconfig.json`'s `compilerOptions`:
+Add this `plugins` configuration to your `tsconfig.json`'s `compilerOptions`:
 
 ```json
 {
   "compilerOptions": {
-    /* ... */
     "plugins": [{ "name": "@xixixao/convex-typescript-plugin" }]
-    /* ... */
   }
 }
 ```
 
-The `tsconfig.json` can be inside the `convex` folder or above it.
+The `tsconfig.json` can be inside the `convex` folder or above it. Leave the
+other `compilerOptions` as they were.
 
 ## Limitations
 
