@@ -1,4 +1,4 @@
-#### Get Started
+# Get Started
 
 Get the plugin working and your TS to JS converted as you save:
 
@@ -44,10 +44,24 @@ project.
 You can see the logs via the vscode command 'TypeScript: Open TS Server Logs." (
 search for 'Loading tsserver-plugin' to see whether it loaded correctly. )
 
-### What Now?
+## What Now?
 
 You can place `debugger` statements inside the implementation which will trigger
 when you use the features in VS Code.
 
 You can read up the docs on
 [Language Service Plugins in the TypeScript repo wiki](https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin#overview-writing-a-simple-plugin).
+
+## Test published version
+
+Make sure you have no .tgz files already in the root directory.
+
+Then run:
+
+```sh
+npm pack
+cd example
+npm i ../xixixao-convex-typescript-plugin-*.tgz
+```
+
+Then restart the TS server to check the plugin is still working.

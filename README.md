@@ -86,7 +86,3 @@ Ideally we wouldn't need this plugin. The functionality could be supported
 directly, and better, by the TypeScript language server itself. But this is
 unlikely to happen any time soon, see:
 https://github.com/microsoft/TypeScript/issues/49033.
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
