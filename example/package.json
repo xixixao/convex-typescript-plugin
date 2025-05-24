@@ -1,8 +1,0 @@
-{
-    "name": "example-tsc-codebase",
-    "dependencies": {
-        "convex": "^1.23.0",
-        "tsserver-plugin": "file:..",
-        "typescript": "^4.4.3"
-    }
-}
