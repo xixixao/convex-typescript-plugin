@@ -10,7 +10,7 @@ A [TypeScript](https://www.typescriptlang.org/) plugin for working with
 
 ### Go to definition
 
-Click on a table name to jump to its definition in your Convex schema:
+Command/control-click on a table name to jump to its definition in your Convex schema:
 
 ```ts
 export const listTasks = query({
@@ -27,8 +27,8 @@ Hover over a table name to see the table's definition.
 
 ### Find all references
 
-Click on the table name in your schema definition to see all places it is used
-(its references).
+Command/control-click on a field name in your schema definition to see all places
+it is used (its references).
 
 ```ts
 export default defineSchema({
