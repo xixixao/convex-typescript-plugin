@@ -45,18 +45,23 @@ export default defineSchema({
 npm install @xixixao/convex-typescript-plugin
 ```
 
-Add this `plugins` configuration to your `tsconfig.json`'s `compilerOptions`:
+Add this configuration to your `tsconfig.json`'s **`compilerOptions`**:
 
 ```json
-{
-  "compilerOptions": {
     "plugins": [{ "name": "@xixixao/convex-typescript-plugin" }]
-  }
-}
 ```
 
 The `tsconfig.json` can be inside the `convex` folder or above it. Leave the
 other `compilerOptions` as they were.
+
+Then in **VS Code** (or a fork), run _Open User Settings (JSON)_ and add this line to the json:
+
+```
+  "typescript.tsserver.pluginPaths": ["./node_modules"]
+```
+
+This will make sure TS plugins can be loaded from your workspace (otherwise you'd have to
+_Select TypeScript Version_ -> _Use Workspace Version_ in every project you open).
 
 ## Limitations
 
