@@ -10,7 +10,8 @@ A [TypeScript](https://www.typescriptlang.org/) plugin for working with
 
 ### Go to definition
 
-Click on a table name to jump to its definition in your Convex schema:
+Command/control-click on a table name to jump to its definition in your Convex
+schema:
 
 ```ts
 export const listTasks = query({
@@ -27,14 +28,14 @@ Hover over a table name to see the table's definition.
 
 ### Find all references
 
-Click on the table name in your schema definition to see all places it is used
-(its references).
+Command/control-click on the table name in your schema definition to see all
+places it is used (its references).
 
 ```ts
 export default defineSchema({
   messages: defineTable({
-    body: v.string(),
     // ^ here cmd+click or ctrl+click to see all references
+    body: v.string(),
   }),
 });
 ```
@@ -54,14 +55,16 @@ Add this configuration to your `tsconfig.json`'s **`compilerOptions`**:
 The `tsconfig.json` can be inside the `convex` folder or above it. Leave the
 other `compilerOptions` as they were.
 
-Then in **VS Code** (or a fork), run _Open User Settings (JSON)_ and add this line to the json:
+Then in **VS Code** (or a fork), run _Open User Settings (JSON)_ and add this
+line to the json:
 
 ```
   "typescript.tsserver.pluginPaths": ["./node_modules"]
 ```
 
-This will make sure TS plugins can be loaded from your workspace (otherwise you'd have to
-_Select TypeScript Version_ -> _Use Workspace Version_ in every project you open).
+This will make sure TS plugins can be loaded from your workspace (otherwise
+you'd have to _Select TypeScript Version_ -> _Use Workspace Version_ in every
+project you open).
 
 ## Limitations
 
